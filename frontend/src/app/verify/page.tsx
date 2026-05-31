@@ -14,7 +14,7 @@ function VerifyContent() {
   const handleVerify = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://sparksoulmetaltech-backend.onrender.com";
       const res = await fetch(`${apiUrl}/api/auth/verify-otp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -69,7 +69,7 @@ function VerifyContent() {
         <p className="text-gray-400 text-sm">
           Didn't receive the code? <button onClick={async () => {
             try {
-              const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+              const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://sparksoulmetaltech-backend.onrender.com";
               const res = await fetch(`${apiUrl}/api/auth/resend-otp`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },

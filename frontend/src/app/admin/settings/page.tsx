@@ -14,7 +14,7 @@ export default function AdminSettings() {
   const [message, setMessage] = useState<{type: "success" | "error", text: string} | null>(null);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/admin/settings")
+    fetch("https://sparksoulmetaltech-backend.onrender.com/api/admin/settings")
       .then(res => res.json())
       .then(data => {
         if (data.smtpHost) setHost(data.smtpHost);
@@ -35,7 +35,7 @@ export default function AdminSettings() {
     setMessage(null);
 
     try {
-      const res = await fetch("http://localhost:5000/api/admin/settings", {
+      const res = await fetch("https://sparksoulmetaltech-backend.onrender.com/api/admin/settings", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ 

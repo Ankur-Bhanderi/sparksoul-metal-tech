@@ -19,7 +19,7 @@ export default function AdminInquiries() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/admin/inquiries")
+    fetch("https://sparksoulmetaltech-backend.onrender.com/api/admin/inquiries")
       .then(res => res.json())
       .then(data => {
         setInquiries(data);

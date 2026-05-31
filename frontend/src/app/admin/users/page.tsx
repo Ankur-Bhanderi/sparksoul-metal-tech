@@ -18,7 +18,7 @@ export default function AdminUsers() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/admin/users")
+    fetch("https://sparksoulmetaltech-backend.onrender.com/api/admin/users")
       .then(res => res.json())
       .then(data => {
         setUsers(data);
@@ -33,7 +33,7 @@ export default function AdminUsers() {
   const handleDelete = async (id: string) => {
     if (!confirm("Are you sure you want to delete this user?")) return;
     try {
-      const res = await fetch(`http://localhost:5000/api/admin/users/${id}`, { method: "DELETE" });
+      const res = await fetch(`https://sparksoulmetaltech-backend.onrender.com/api/admin/users/${id}`, { method: "DELETE" });
       if (res.ok) {
         setUsers(users.filter(u => u.id !== id));
       } else {
@@ -51,7 +51,7 @@ export default function AdminUsers() {
     if (!confirm(`Are you sure you want to change this user's role to ${newRole}?`)) return;
     
     try {
-      const res = await fetch(`http://localhost:5000/api/admin/users/${id}/role`, { 
+      const res = await fetch(`https://sparksoulmetaltech-backend.onrender.com/api/admin/users/${id}/role`, { 
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ role: newRole })
@@ -70,7 +70,7 @@ export default function AdminUsers() {
     e.preventDefault();
     if (!editingUser) return;
     try {
-      const res = await fetch(`http://localhost:5000/api/admin/users/${editingUser.id}`, {
+      const res = await fetch(`https://sparksoulmetaltech-backend.onrender.com/api/admin/users/${editingUser.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name: editingUser.name, email: editingUser.email, company: editingUser.company })

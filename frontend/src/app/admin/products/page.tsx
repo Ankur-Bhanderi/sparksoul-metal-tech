@@ -20,7 +20,7 @@ export default function AdminProducts() {
 
   useEffect(() => {
     // In a real app, this would use the env variable for the API URL
-    fetch("http://localhost:5000/api/admin/products")
+    fetch("https://sparksoulmetaltech-backend.onrender.com/api/admin/products")
       .then(res => res.json())
       .then(data => {
         setProducts(data);
@@ -35,7 +35,7 @@ export default function AdminProducts() {
   const handleDelete = async (id: string) => {
     if (!confirm("Are you sure you want to delete this product?")) return;
     try {
-      const res = await fetch(`http://localhost:5000/api/admin/products/${id}`, { method: "DELETE" });
+      const res = await fetch(`https://sparksoulmetaltech-backend.onrender.com/api/admin/products/${id}`, { method: "DELETE" });
       if (res.ok) {
         setProducts(products.filter(p => p.id !== id));
       } else {
