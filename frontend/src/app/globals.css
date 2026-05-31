@@ -1,0 +1,30 @@
+@import "tailwindcss";
+
+@theme {
+  --color-gold-400: #e5c158;
+  --color-gold-500: #d4af37;
+  --color-gold-600: #b5952f;
+  --color-brass-400: #c5b652;
+  --color-brass-500: #b5a642;
+  --color-luxury-900: #050505;
+  --color-luxury-800: #121212;
+  --color-luxury-700: #1a1a1a;
+  
+  --font-sans: var(--font-inter);
+  --font-serif: var(--font-playfair);
+}
+
+:root {
+  --background: #050505;
+  --foreground: #f3f4f6;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+/* Custom styles for luxurious smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
