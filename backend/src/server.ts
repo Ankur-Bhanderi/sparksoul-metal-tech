@@ -18,6 +18,10 @@ app.use("/api/auth", authRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/inquiries", inquiryRoutes);
 
+app.get("/", (req, res) => {
+  res.send("SparkSoul Metal Tech API is Live! 🚀");
+});
+
 app.get("/api/health", (req, res) => {
   res.json({ status: "ok", message: "SparkSoul Metal Tech API is running" });
 });
