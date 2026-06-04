@@ -38,12 +38,12 @@ export default function AdminDashboard() {
         
         <div className="space-y-4">
           {[1, 2, 3].map((_, i) => (
-            <div key={i} className="flex items-center justify-between p-4 hover:bg-gray-50 rounded-lg transition-colors border border-transparent hover:border-gray-100 cursor-pointer">
+            <div key={i} className="flex flex-col md:flex-row md:items-center justify-between p-4 hover:bg-gray-50 rounded-lg transition-colors border border-transparent hover:border-gray-100 cursor-pointer gap-4 md:gap-0">
               <div className="flex flex-col">
                 <span className="font-semibold text-luxury-900">John Doe Enterprises</span>
                 <span className="text-sm text-gray-500">Requested a quote for Royal Gold Basin Mixer</span>
               </div>
-              <span className="px-3 py-1 bg-yellow-100 text-yellow-700 text-xs font-semibold uppercase tracking-wider rounded-full">
+              <span className="px-3 py-1 bg-yellow-100 text-yellow-700 text-xs font-semibold uppercase tracking-wider rounded-full self-start md:self-auto">
                 Pending
               </span>
             </div>

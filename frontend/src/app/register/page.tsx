@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ArrowRight, User, Mail, Lock, Building, Phone, Briefcase } from "lucide-react";
+import { ArrowRight, User, Mail, Lock, Building, Phone, Briefcase, Eye, EyeOff } from "lucide-react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 
@@ -15,6 +15,7 @@ export default function RegisterPage() {
     company: "",
     password: ""
   });
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -32,12 +33,7 @@ export default function RegisterPage() {
       const data = await res.json();
       
       if (res.ok) {
-        // TEMPORARY: OTP flow disabled
-        // localStorage.setItem("verifyEmail", email);
-        // window.location.href = "/verify";
-        
-        alert("Registration successful! You can now log in.");
-        window.location.href = "/login";
+        window.location.href = `/verify?email=${encodeURIComponent(formData.email)}`;
       } else {
         alert(data.error || "Registration failed");
       }
@@ -109,7 +105,14 @@ export default function RegisterPage() {
               <label className="block text-xs uppercase tracking-widest text-gray-400 mb-2 font-semibold">Password</label>
               <div className="relative">
                 <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" size={18} />
-                <input type="password" name="password" required onChange={handleChange} className="w-full bg-luxury-900 border border-white/10 text-white pl-12 pr-4 py-4 focus:outline-none focus:border-gold-500 transition-colors" placeholder="••••••••" />
+                <input type={showPassword ? "text" : "password"} name="password" required onChange={handleChange} className="w-full bg-luxury-900 border border-white/10 text-white pl-12 pr-12 py-4 focus:outline-none focus:border-gold-500 transition-colors" placeholder="••••••••" />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-white transition-colors focus:outline-none"
+                >
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
               </div>
             </div>
 

@@ -47,8 +47,9 @@ export default function AdminInquiries() {
       </div>
 
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-        <table className="w-full text-left border-collapse">
-          <thead>
+        <div className="overflow-x-auto">
+          <table className="w-full text-left border-collapse min-w-max whitespace-nowrap">
+            <thead>
             <tr className="bg-gray-50 border-b border-gray-100 text-gray-500 text-xs uppercase tracking-wider">
               <th className="p-4 font-semibold">Company / Contact</th>
               <th className="p-4 font-semibold">Type</th>
@@ -89,7 +90,8 @@ export default function AdminInquiries() {
               ))
             )}
           </tbody>
-        </table>
+          </table>
+        </div>
       </div>
     </div>
   );

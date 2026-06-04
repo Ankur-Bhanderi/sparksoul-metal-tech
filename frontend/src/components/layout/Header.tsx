@@ -11,10 +11,12 @@ export default function Header() {
   const [user, setUser] = useState<{role: string} | null>(null);
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    setUser(null);
-    window.location.href = "/login";
+    if (window.confirm("Are you sure you want to log out?")) {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      setUser(null);
+      window.location.href = "/login";
+    }
   };
 
   useEffect(() => {

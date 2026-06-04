@@ -2,11 +2,11 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { LayoutDashboard, Package, MessageSquare, Users, Settings, LogOut, Home } from "lucide-react";
-
+import { LayoutDashboard, Package, MessageSquare, Users, Settings, LogOut, Home, Menu, X } from "lucide-react";
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<{name: string, email: string, role: string} | null>(null);
   const [isAuthorized, setIsAuthorized] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -28,9 +28,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    window.location.href = "/login";
+    if (window.confirm("Are you sure you want to log out?")) {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      window.location.href = "/login";
+    }
   };
 
   if (!isAuthorized) {
@@ -38,13 +40,27 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex">
+    <div className="min-h-screen bg-gray-50 flex overflow-hidden">
+      {/* Mobile Sidebar Overlay */}
+      {isMobileMenuOpen && (
+        <div 
+          className="fixed inset-0 z-40 bg-black/50 md:hidden"
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+      )}
+
       {/* Sidebar */}
-      <aside className="w-64 bg-luxury-900 text-white flex flex-col border-r border-white/10">
-        <div className="h-20 flex items-center justify-center border-b border-white/10">
+      <aside className={`fixed inset-y-0 left-0 z-50 w-64 bg-luxury-900 text-white flex flex-col border-r border-white/10 transition-transform duration-300 ease-in-out md:relative md:translate-x-0 ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"}`}>
+        <div className="h-20 flex items-center justify-between md:justify-center px-4 md:px-0 border-b border-white/10">
           <h1 className="text-xl font-serif font-bold text-white tracking-widest uppercase">
             SparkSoul <span className="text-gold-500 italic">Admin</span>
           </h1>
+          <button 
+            className="md:hidden text-gray-400 hover:text-white"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            <X size={24} />
+          </button>
         </div>
 
         <nav className="flex-1 py-8 px-4 space-y-2">
@@ -83,23 +99,31 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 flex flex-col">
+      <main className="flex-1 flex flex-col min-w-0">
         {/* Topbar */}
-        <header className="h-20 bg-white border-b border-gray-200 flex items-center justify-between px-8">
-          <h2 className="text-xl font-semibold text-luxury-900">Admin Control Panel</h2>
+        <header className="h-20 bg-white border-b border-gray-200 flex items-center justify-between px-4 md:px-8">
+          <div className="flex items-center gap-4">
+            <button 
+              className="md:hidden text-luxury-900 focus:outline-none hover:bg-gray-100 p-2 rounded-lg"
+              onClick={() => setIsMobileMenuOpen(true)}
+            >
+              <Menu size={24} />
+            </button>
+            <h2 className="text-lg md:text-xl font-semibold text-luxury-900">Admin Control Panel</h2>
+          </div>
           <div className="flex items-center gap-4">
             <div className="w-10 h-10 rounded-full bg-luxury-800 text-gold-500 flex items-center justify-center font-bold font-serif uppercase">
               {user?.name?.charAt(0) || "A"}
             </div>
-            <div className="text-sm">
+            <div className="text-sm hidden sm:block">
               <p className="font-semibold text-luxury-900">{user?.name || "Admin User"}</p>
-              <p className="text-gray-500 text-xs">{user?.email || "admin@sparksoulmetal.com"}</p>
+              <p className="text-gray-500 text-xs truncate max-w-[150px]">{user?.email || "admin@sparksoulmetal.com"}</p>
             </div>
           </div>
         </header>
 
         {/* Page Content */}
-        <div className="flex-1 p-8 overflow-y-auto">
+        <div className="flex-1 p-4 md:p-8 overflow-y-auto">
           {children}
         </div>
       </main>

@@ -2,12 +2,13 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ArrowRight, Mail, Lock } from "lucide-react";
+import { ArrowRight, Mail, Lock, Eye, EyeOff } from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -75,18 +76,25 @@ export default function LoginPage() {
             <div>
               <div className="flex justify-between items-center mb-2">
                 <label className="block text-xs uppercase tracking-widest text-gray-400 font-semibold">Password</label>
-                <a href="#" className="text-xs text-gold-500 hover:text-white transition-colors">Forgot Password?</a>
+                <Link href="/forgot-password" className="text-xs text-gold-500 hover:text-white transition-colors">Forgot Password?</Link>
               </div>
               <div className="relative">
                 <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" size={18} />
                 <input 
-                  type="password" 
+                  type={showPassword ? "text" : "password"} 
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full bg-luxury-900 border border-white/10 text-white pl-12 pr-4 py-4 focus:outline-none focus:border-gold-500 transition-colors" 
+                  className="w-full bg-luxury-900 border border-white/10 text-white pl-12 pr-12 py-4 focus:outline-none focus:border-gold-500 transition-colors" 
                   placeholder="••••••••"
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-white transition-colors focus:outline-none"
+                >
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
               </div>
             </div>
 
