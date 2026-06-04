@@ -20,6 +20,7 @@ export default function Home() {
             src="https://images.unsplash.com/photo-1620626011761-996317b8d101?q=80&w=2069&auto=format&fit=crop"
             alt="Luxury Bathroom"
             fill
+            sizes="100vw"
             className="object-cover opacity-40"
             priority
           />
@@ -94,6 +95,7 @@ export default function Home() {
                   src={category.img}
                   alt={category.title}
                   fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
                   className="object-cover opacity-60 group-hover:scale-110 group-hover:opacity-40 transition-all duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-luxury-900/90 to-transparent"></div>
@@ -126,6 +128,7 @@ export default function Home() {
                   src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?q=80&w=2070&auto=format&fit=crop"
                   alt="Manufacturing Process"
                   fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
                   className="object-cover"
                 />
                 <div className="absolute -bottom-8 -right-8 bg-luxury-900 p-8 border border-white/10 hidden md:block">
