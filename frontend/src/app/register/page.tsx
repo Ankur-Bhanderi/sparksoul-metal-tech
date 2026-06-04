@@ -16,6 +16,7 @@ export default function RegisterPage() {
     password: ""
   });
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -23,6 +24,7 @@ export default function RegisterPage() {
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
       const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://sparksoulmetaltech-backend.onrender.com";
       const res = await fetch(`${apiUrl}/api/auth/register`, {
@@ -36,10 +38,12 @@ export default function RegisterPage() {
         window.location.href = `/verify?email=${encodeURIComponent(formData.email)}`;
       } else {
         alert(data.error || "Registration failed");
+        setIsLoading(false);
       }
     } catch (err) {
       console.error(err);
       alert("Error connecting to server");
+      setIsLoading(false);
     }
   };
 
@@ -116,8 +120,13 @@ export default function RegisterPage() {
               </div>
             </div>
 
-            <button type="submit" className="w-full bg-gold-500 text-luxury-900 py-4 font-semibold uppercase tracking-wider flex items-center justify-center gap-2 hover:bg-white transition-colors duration-300 mt-4">
-              Create Account <ArrowRight size={18} />
+            <button 
+              type="submit" 
+              disabled={isLoading}
+              className="w-full bg-gold-500 text-luxury-900 py-4 font-semibold uppercase tracking-wider flex items-center justify-center gap-2 hover:bg-white transition-colors duration-300 mt-4 disabled:opacity-70"
+            >
+              {isLoading ? "Creating Account..." : "Create Account"} 
+              {!isLoading && <ArrowRight size={18} />}
             </button>
           </form>
 

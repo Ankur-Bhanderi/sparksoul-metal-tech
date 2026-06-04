@@ -10,9 +10,11 @@ function VerifyContent() {
   const router = useRouter();
   const email = searchParams.get("email") || "";
   const [otp, setOtp] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleVerify = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
       const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://sparksoulmetaltech-backend.onrender.com";
       const res = await fetch(`${apiUrl}/api/auth/verify-otp`, {
@@ -26,10 +28,12 @@ function VerifyContent() {
         router.push("/login?verified=true");
       } else {
         alert(data.error || "Invalid OTP");
+        setIsLoading(false);
       }
     } catch (err) {
       console.error(err);
       alert("Error connecting to server");
+      setIsLoading(false);
     }
   };
 
@@ -60,8 +64,13 @@ function VerifyContent() {
           />
         </div>
 
-        <button type="submit" className="w-full bg-gold-500 text-luxury-900 py-4 font-semibold uppercase tracking-wider flex items-center justify-center gap-2 hover:bg-white transition-colors duration-300">
-          Verify Account <ArrowRight size={18} />
+        <button 
+          type="submit" 
+          disabled={isLoading}
+          className="w-full bg-gold-500 text-luxury-900 py-4 font-semibold uppercase tracking-wider flex items-center justify-center gap-2 hover:bg-white transition-colors duration-300 disabled:opacity-70"
+        >
+          {isLoading ? "Verifying..." : "Verify Account"} 
+          {!isLoading && <ArrowRight size={18} />}
         </button>
       </form>
 

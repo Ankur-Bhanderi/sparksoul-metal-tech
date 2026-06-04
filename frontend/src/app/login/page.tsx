@@ -9,9 +9,11 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
       const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://sparksoulmetaltech-backend.onrender.com";
       const res = await fetch(`${apiUrl}/api/auth/login`, {
@@ -35,10 +37,12 @@ export default function LoginPage() {
         }
       } else {
         alert(data.error || "Login failed");
+        setIsLoading(false);
       }
     } catch (err) {
       console.error(err);
       alert("Error connecting to server");
+      setIsLoading(false);
     }
   };
 
@@ -98,8 +102,13 @@ export default function LoginPage() {
               </div>
             </div>
 
-            <button type="submit" className="w-full bg-gold-500 text-luxury-900 py-4 font-semibold uppercase tracking-wider flex items-center justify-center gap-2 hover:bg-white transition-colors duration-300 mt-4">
-              Sign In <ArrowRight size={18} />
+            <button 
+              type="submit" 
+              disabled={isLoading}
+              className="w-full bg-gold-500 text-luxury-900 py-4 font-semibold uppercase tracking-wider flex items-center justify-center gap-2 hover:bg-white transition-colors duration-300 mt-4 disabled:opacity-70"
+            >
+              {isLoading ? "Signing In..." : "Sign In"} 
+              {!isLoading && <ArrowRight size={18} />}
             </button>
           </form>
 
