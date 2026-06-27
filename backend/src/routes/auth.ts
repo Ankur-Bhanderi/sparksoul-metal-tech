@@ -55,8 +55,8 @@ router.post("/register", async (req, res) => {
       });
     }
 
-    // Send email
-    await sendOtpEmail(email, otp);
+    // Send email asynchronously so we don't block the API response
+    sendOtpEmail(email, otp).catch(console.error);
 
     res.status(200).json({ message: "User registered successfully, please verify OTP", email });
   } catch (error) {
@@ -81,7 +81,8 @@ router.post("/resend-otp", async (req, res) => {
       data: { otp, otpExpiry }
     });
 
-    await sendOtpEmail(email, otp);
+    // Send email asynchronously
+    sendOtpEmail(email, otp).catch(console.error);
 
     res.status(200).json({ message: "OTP resent successfully" });
   } catch (error) {
@@ -152,7 +153,8 @@ router.post("/forgot-password", async (req, res) => {
       data: { otp, otpExpiry }
     });
 
-    await sendForgotPasswordEmail(email, otp);
+    // Send email asynchronously
+    sendForgotPasswordEmail(email, otp).catch(console.error);
 
     res.status(200).json({ message: "If an account with that email exists, a password reset link has been sent." });
   } catch (error) {
